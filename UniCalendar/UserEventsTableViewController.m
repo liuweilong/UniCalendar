@@ -49,7 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Events";
+    self.title = @"Calendar";
     
     NSDate *now = [NSDate date];
     
@@ -100,8 +100,6 @@
     _cellDateFormatter = [[NSDateFormatter alloc] init];
     _cellDateFormatter.dateStyle = NSDateFormatterNoStyle;
     _cellDateFormatter.timeStyle = NSDateFormatterShortStyle;
-    
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
