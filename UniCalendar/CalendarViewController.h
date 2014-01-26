@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EventKit/EventKit.h>
 #import "MZDayPicker.h"
 
 @interface CalendarViewController : UIViewController <MZDayPickerDelegate, MZDayPickerDataSource, UITableViewDataSource, UITableViewDelegate>
@@ -15,5 +16,12 @@
 @property (weak, nonatomic) IBOutlet MZDayPicker *dayPicker;
 @property (nonatomic,strong) NSMutableArray *tableData;
 @property (nonatomic,strong) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSMutableDictionary *sections;
+@property (strong, nonatomic) NSArray *sortedDays;
+@property (strong, nonatomic) NSDateFormatter *sectionDateFormatter;
+@property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
+
+- (NSDate *)dateAtBeginningOfDayForDay:(NSDate *)date;
+- (NSDate *)dateByAddingYears:(NSInteger)numberOfYears toDate:(NSDate *)inputDate;
 
 @end

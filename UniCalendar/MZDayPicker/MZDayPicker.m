@@ -32,9 +32,9 @@ CGFloat const kDefaultDayNameLabelFontSize = 11.0f;
 
 CGFloat const kDefaultCellHeight = 64.0f;
 CGFloat const kDefaultCellWidth = 64.0f;
-CGFloat const kDefaultCellFooterHeight = 8.0f;
+CGFloat const kDefaultCellFooterHeight = 6.0f;
 
-CGFloat const kDefaultDayLabelMaxZoomValue = 7.0f;
+CGFloat const kDefaultDayLabelMaxZoomValue = 0.0f;
 
 NSInteger const kDefaultInitialInactiveDays = 8;
 NSInteger const kDefaultFinalInactiveDays = 8;
@@ -488,12 +488,12 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
             
             if (distance < self.dayCellSize.width/2 && distance > -self.dayCellSize.width/2) {
                 
-                cell.containerView.backgroundColor = self.backgroundPickerColor;
-                cell.containerView.layer.shadowOpacity = shadowStep;
+                cell.backgroundColor = self.backgroundPickerColor;
+                cell.layer.shadowOpacity = shadowStep;
                 
             } else {
-                cell.containerView.backgroundColor = [UIColor clearColor];
-                cell.containerView.layer.shadowOpacity = 0;
+                cell.backgroundColor = [UIColor clearColor];
+                cell.layer.shadowOpacity = 0;
                 
             }
             
@@ -601,8 +601,8 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
     [self setShadowForCell:cell];
     
     if (indexPath.row == _currentIndex.row) {
-        cell.containerView.backgroundColor = self.backgroundPickerColor;
-        cell.containerView.layer.shadowOpacity = 1.0;
+        cell.backgroundColor = self.backgroundPickerColor;
+        cell.layer.shadowOpacity = 1.0;
         
         [cell setBottomBorderSlideHeight:1.0];
         
@@ -611,7 +611,7 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
     } else {
         cell.dayLabel.font = [cell.dayLabel.font fontWithSize:self.dayLabelFontSize];
         
-        cell.containerView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor clearColor];
         [cell setBottomBorderSlideHeight:0];
     }
     
@@ -630,12 +630,12 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
 
 - (void)setShadowForCell:(MZDayPickerCell *)cell
 {
-    cell.containerView.layer.masksToBounds = NO;
-    cell.containerView.layer.shadowOffset = kDefaultShadowCellOffset;
-    cell.containerView.layer.shadowRadius = kDefaultShadowCellRadius;
-    cell.containerView.layer.shadowOpacity = 0.0;
-    cell.containerView.layer.shadowColor = kDefaultShadowCellColor.CGColor;
-    cell.containerView.layer.shadowPath = [UIBezierPath bezierPathWithRect:cell.containerView.bounds].CGPath;
+    cell.layer.masksToBounds = NO;
+    cell.layer.shadowOffset = kDefaultShadowCellOffset;
+    cell.layer.shadowRadius = kDefaultShadowCellRadius;
+    cell.layer.shadowOpacity = 0.0;
+    cell.layer.shadowColor = kDefaultShadowCellColor.CGColor;
+    cell.layer.shadowPath = [UIBezierPath bezierPathWithRect:cell.bounds].CGPath;
 }
 
 @end

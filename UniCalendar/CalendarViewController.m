@@ -14,6 +14,9 @@
 
 @implementation CalendarViewController
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define redColor UIColorFromRGB(0x850000)
+
 - (NSDate *)dateAtBeginningOfDayForDay:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
@@ -51,6 +54,7 @@
     
     self.dayPicker.dayNameLabelFontSize = 13.0f;
     self.dayPicker.dayLabelFontSize = 20.0f;
+    self.dayPicker.bottomBorderColor = redColor;
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"EE"];
@@ -65,12 +69,32 @@
      *  or set up date range:
      */
     
-    [self.dayPicker setStartDate:[NSDate dateFromDay:28 month:9 year:2013] endDate:[NSDate dateFromDay:5 month:10 year:2013]];
+    //set the day picker to be today
+    NSDate *today = [NSDate date];
+    NSDate *startDate = [self dateByAddingYears:-1 toDate:today];
+    NSDate *endDate = [self dateByAddingYears:1 toDate:today];
     
-    [self.dayPicker setCurrentDate:[NSDate dateFromDay:3 month:10 year:2013] animated:NO];
+    //set the startDate and endDate of the table view
+    NSCalendar *cal = [[NSCalendar alloc] init];
+    NSDateComponents *todayComponents = [cal components:0 fromDate:today];
+    NSDateComponents *startDayComponents = [cal components:0 fromDate:startDate];
+    NSDateComponents *endDayComponents = [cal components:0 fromDate:endDate];
+    
+    [self.dayPicker setStartDate:[NSDate dateFromDay:[startDayComponents day] month:[startDayComponents day] year:[startDayComponents day]] endDate:[NSDate dateFromDay:[endDayComponents day] month:[endDayComponents day] year:[endDayComponents day]]];
+    
+    [self.dayPicker setCurrentDate:[NSDate dateFromDay:[todayComponents day] month:[todayComponents month] year:[todayComponents year]] animated:NO];
     
     self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.frame.size.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.frame.size.height);
-    self.title = @"Cal";
+    self.title = @"Calendar";
+    
+    //Date formatter initialization
+    _sectionDateFormatter = [[NSDateFormatter alloc] init];
+    _sectionDateFormatter.dateStyle = NSDateFormatterLongStyle;
+    _sectionDateFormatter.timeStyle = NSDateFormatterNoStyle;
+    
+    _cellDateFormatter = [[NSDateFormatter alloc] init];
+    _cellDateFormatter.dateStyle = NSDateFormatterNoStyle;
+    _cellDateFormatter.timeStyle = NSDateFormatterShortStyle;
     
 }
 
@@ -82,9 +106,50 @@
 
 - (void)dayPicker:(MZDayPicker *)dayPicker didSelectDay:(MZDay *)day
 {
-    NSLog(@"Did select day %@",day.day);
+    //NSLog(@"Did select day %@",day.day);
     
-    [self.tableData addObject:day];
+    //[self.tableData addObject:day];
+    NSDate *now = [NSDate dateFromDay:[day.day integerValue] month:[day.month integerValue] year:[day.year integerValue]];
+    
+    //set the startDate and endDate of the table view
+    NSDate *startDate = [self dateAtBeginningOfDayForDay:now];
+    NSDate *endDate = [self dateByAddingYears:1 toDate:startDate];
+    
+    //get all events from current events store within startdate and enddate
+    EKEventStore *eventStore = [[EKEventStore alloc] init];
+    
+    //Request the access to the Calendar
+    [eventStore requestAccessToEntityType:EKEntityTypeEvent
+                               completion:^(BOOL granted,NSError* error){
+                                   
+                                   //Access not granted-------------
+                                   if(!granted){
+                                       NSLog(@"Permissions not granted");
+                                   }
+                               }];
+    
+    NSPredicate *searchPredicate = [eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
+    NSArray *events = [eventStore eventsMatchingPredicate:searchPredicate];
+    
+    self.sections = [NSMutableDictionary dictionary];
+    for (EKEvent *event in events) {
+        //reduce the event date to date components (year, month, day)
+        NSDate *eventDate = [self dateAtBeginningOfDayForDay:event.startDate];
+        
+        // If we don't yet have an array to hold the events for this day, create one
+        NSMutableArray *eventsOnThisDay = [self.sections objectForKey:eventDate];
+        if (eventsOnThisDay == nil) {
+            eventsOnThisDay = [NSMutableArray array];
+            [self.sections setObject:eventsOnThisDay forKey:eventDate];
+        }
+        
+        [eventsOnThisDay addObject:event];
+    }
+    
+    //Created a sorted list of days
+    NSArray *unsortedDays = [self.sections allKeys];
+    self.sortedDays = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
+    
     [self.tableView reloadData];
 }
 
@@ -97,28 +162,35 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [_sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.tableData.count;
+    NSDate *dateRepresentingThisDay = [_sortedDays objectAtIndex:section];
+    return [[_sections objectForKey:dateRepresentingThisDay] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSDate *date = [_sortedDays objectAtIndex:section];
+    return [_sectionDateFormatter stringFromDate:date];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* reuseIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    NSDate *dateRepresentingThisDay = [self.sortedDays objectAtIndex:indexPath.section];
+    NSArray *eventsOnThisDay = [self.sections objectForKey:dateRepresentingThisDay];
+    EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    cell.textLabel.text = event.title;
+    if (event.allDay) {
+        cell.detailTextLabel.text = @"all day";
+    } else {
+        cell.detailTextLabel.text = [self.cellDateFormatter stringFromDate:event.startDate];
     }
-    
-    MZDay *day = self.tableData[indexPath.row];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",day.day];
-    cell.detailTextLabel.text = day.name;
     
     return cell;
 }
