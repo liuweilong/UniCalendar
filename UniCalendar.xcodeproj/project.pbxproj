@@ -20,7 +20,6 @@
 		7E17552818924AEC0016A948 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E17550A18924AEC0016A948 /* UIKit.framework */; };
 		7E17553018924AEC0016A948 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E17552E18924AEC0016A948 /* InfoPlist.strings */; };
 		7E17553218924AEC0016A948 /* UniCalendarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E17553118924AEC0016A948 /* UniCalendarTests.m */; };
-		7E17553E18926A200016A948 /* UserEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E17553D18926A200016A948 /* UserEventsTableViewController.m */; };
 		7EBCE4841894BC7D002BC42A /* MZDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCE47F1894BC7D002BC42A /* MZDay.m */; };
 		7EBCE4851894BC7D002BC42A /* MZDayPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCE4811894BC7D002BC42A /* MZDayPicker.m */; };
 		7EBCE4861894BC7D002BC42A /* MZDayPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCE4831894BC7D002BC42A /* MZDayPickerCell.m */; };
@@ -55,8 +54,6 @@
 		7E17552D18924AEC0016A948 /* UniCalendarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UniCalendarTests-Info.plist"; sourceTree = "<group>"; };
 		7E17552F18924AEC0016A948 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7E17553118924AEC0016A948 /* UniCalendarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UniCalendarTests.m; sourceTree = "<group>"; };
-		7E17553C18926A200016A948 /* UserEventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEventsTableViewController.h; sourceTree = "<group>"; };
-		7E17553D18926A200016A948 /* UserEventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEventsTableViewController.m; sourceTree = "<group>"; };
 		7EBCE47E1894BC7D002BC42A /* MZDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZDay.h; sourceTree = "<group>"; };
 		7EBCE47F1894BC7D002BC42A /* MZDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZDay.m; sourceTree = "<group>"; };
 		7EBCE4801894BC7D002BC42A /* MZDayPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZDayPicker.h; sourceTree = "<group>"; };
@@ -169,8 +166,6 @@
 			children = (
 				7EBCE4871894BCB5002BC42A /* CalendarViewController.h */,
 				7EBCE4881894BCB5002BC42A /* CalendarViewController.m */,
-				7E17553C18926A200016A948 /* UserEventsTableViewController.h */,
-				7E17553D18926A200016A948 /* UserEventsTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -293,7 +288,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E17553E18926A200016A948 /* UserEventsTableViewController.m in Sources */,
 				7E17551718924AEC0016A948 /* AppDelegate.m in Sources */,
 				7E17551318924AEC0016A948 /* main.m in Sources */,
 				7EBCE4861894BC7D002BC42A /* MZDayPickerCell.m in Sources */,

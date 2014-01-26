@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <EventKit/EventKit.h>
 
 @implementation AppDelegate
 
@@ -33,6 +34,21 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     // Override point for customization after application launch.
+    
+    //Gain access of calendar
+    EKEventStore *eventStore = [[EKEventStore alloc] init];
+    
+    //Request the access to the Calendar
+    [eventStore requestAccessToEntityType:EKEntityTypeEvent
+                               completion:^(BOOL granted,NSError* error){
+                                   
+                                   //Access not granted-------------
+                                   if(!granted){
+                                       NSLog(@"Permissions not granted");
+                                   }
+                               }];
+
+    
     return YES;
 }
 							
