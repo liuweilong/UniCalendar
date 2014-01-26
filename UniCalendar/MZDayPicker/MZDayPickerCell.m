@@ -109,15 +109,15 @@
     UIView* containingView = [[UIView alloc] initWithFrame:CGRectMake(self.footerHeight, 0, self.cellSize.width, self.cellSize.height)];
     
     self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cellSize.width, self.cellSize.height)];
-    self.dayLabel.center = CGPointMake(containingView.frame.size.width/2, self.cellSize.height/2.6);
+    self.dayLabel.center = CGPointMake(containingView.frame.size.width/2, self.cellSize.height/2.8);
     self.dayLabel.textAlignment = NSTextAlignmentCenter;
-    self.dayLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.dayLabel.font.pointSize];
+    self.dayLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:self.dayLabel.font.pointSize];
     self.dayLabel.backgroundColor = [UIColor clearColor];
     
     self.dayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cellSize.width, self.cellSize.height)];
-    self.dayNameLabel.center = CGPointMake(containingView.frame.size.width/2, self.cellSize.height/1.3);
+    self.dayNameLabel.center = CGPointMake(containingView.frame.size.width/2, self.cellSize.height/1.5);
     self.dayNameLabel.textAlignment = NSTextAlignmentCenter;
-    self.dayNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:self.dayNameLabel.font.pointSize];
+    self.dayNameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.dayNameLabel.font.pointSize];
     self.dayNameLabel.backgroundColor = [UIColor clearColor];
     
     [containingView addSubview: self.dayLabel];

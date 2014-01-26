@@ -50,6 +50,7 @@
     self.dayPicker.delegate = self;
     self.dayPicker.dataSource = self;
     
+    self.dayPicker.bottomBorderColor = redColor;
     self.dayPicker.dayNameLabelFontSize = 13.0f;
     self.dayPicker.dayLabelFontSize = 20.0f;
     
@@ -81,7 +82,9 @@
     [self.dayPicker setStartDate:startDate endDate:endDate];
     [self.dayPicker setCurrentDate:today animated:NO];
     
-    self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.frame.size.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.frame.size.height);
+//    self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.frame.size.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.frame.size.height);
+    
+    self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.dayCellSize.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.dayCellSize.height);
     self.title = @"Calendar";
     
     //Date formatter initialization
