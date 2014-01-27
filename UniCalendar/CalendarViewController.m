@@ -16,6 +16,8 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define redColor UIColorFromRGB(0x850000)
+#define today [NSDate date]
+
 
 - (NSDate *)dateAtBeginningOfDayForDay:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -68,10 +70,9 @@
      */
     
     //set the day picker to be today
-    NSDate *today = [NSDate date];
-    today = [self dateAtBeginningOfDayForDay:today];
-    NSDate *startDate = [self dateByAddingYears:-1 toDate:today];
-    NSDate *endDate = [self dateByAddingYears:1 toDate:today];
+    NSDate *now = [self dateAtBeginningOfDayForDay:today];
+    NSDate *startDate = [self dateByAddingYears:-1 toDate:now];
+    NSDate *endDate = [self dateByAddingYears:1 toDate:now];
     
     //set the startDate and endDate of the table view
 //    NSCalendar *cal = [[NSCalendar alloc] init];
@@ -85,28 +86,30 @@
 //    self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.frame.size.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.frame.size.height);
     
     self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.dayCellSize.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.dayCellSize.height);
-    self.title = @"Calendar";
     
     //Date formatter initialization
     _sectionDateFormatter = [[NSDateFormatter alloc] init];
-    _sectionDateFormatter.dateStyle = NSDateFormatterLongStyle;
-    _sectionDateFormatter.timeStyle = NSDateFormatterNoStyle;
+    [_sectionDateFormatter setDateFormat:@"EEEE, dd MMMM yyyy"];
     
     _cellDateFormatter = [[NSDateFormatter alloc] init];
     _cellDateFormatter.dateStyle = NSDateFormatterNoStyle;
     _cellDateFormatter.timeStyle = NSDateFormatterShortStyle;
     
-    NSDate *now = [NSDate date];
+    _titleDateFormatter = [[NSDateFormatter alloc] init];
+    [_titleDateFormatter setDateFormat:@"MMMM yyyy"];
+    
+    self.title = [_titleDateFormatter stringFromDate:today];
+    
     
     //set the startDate and endDate of the table view
-    NSDate *eventStartDate = [self dateAtBeginningOfDayForDay:now];
+    NSDate *eventStartDate = [self dateAtBeginningOfDayForDay:today];
     NSDate *eventEndDate = [self dateByAddingYears:1 toDate:eventStartDate];
     
     //get all events from current events store within startdate and enddate
-    EKEventStore *eventStore = [[EKEventStore alloc] init];
+    _eventStore = [[EKEventStore alloc] init];
     
-    NSPredicate *searchPredicate = [eventStore predicateForEventsWithStartDate:eventStartDate endDate:eventEndDate calendars:nil];
-    NSArray *events = [eventStore eventsMatchingPredicate:searchPredicate];
+    NSPredicate *searchPredicate = [_eventStore predicateForEventsWithStartDate:eventStartDate endDate:eventEndDate calendars:nil];
+    NSArray *events = [_eventStore eventsMatchingPredicate:searchPredicate];
     
     self.sections = [NSMutableDictionary dictionary];
     for (EKEvent *event in events) {
@@ -126,6 +129,8 @@
     //Created a sorted list of days
     NSArray *unsortedDays = [self.sections allKeys];
     self.sortedDays = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
+    
+    [self.tableView reloadData];
 }
 
 - (NSString *)dayPicker:(MZDayPicker *)dayPicker titleForCellDayNameLabelInDay:(MZDay *)day
@@ -136,18 +141,18 @@
 
 - (void)dayPicker:(MZDayPicker *)dayPicker didSelectDay:(MZDay *)day
 {
-    NSLog(@"Did select day %@ month%@ year%@",day.day, day.month, day.year);
+    NSLog(@"Did select day %@",day.date);
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     //[self.tableData addObject:day];
 //  NSDate *now = [NSDate dateFromDay:[day.day integerValue] month:[day.month integerValue] year:[day.year integerValue]];
-    NSDate *today = [NSDate date];
-    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:today];
+//    NSDate *today = [NSDate date];
+    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:day.date];
     
     NSDateComponents *nowComponents = [[NSDateComponents alloc] init];
     nowComponents.year = dateComps.year;
     nowComponents.month = dateComps.month;
-    nowComponents.day = [day.day integerValue];
+    nowComponents.day = dateComps.day;
     
     NSDate *now = [calendar dateFromComponents:nowComponents];
     
@@ -181,6 +186,8 @@
     self.sortedDays = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
     
     [self.tableView reloadData];
+    
+    self.title = [_titleDateFormatter stringFromDate:day.date];
 }
 
 - (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
@@ -224,6 +231,46 @@
     
     return cell;
 }
+
+// Display an event edit view controller when the user taps the "+" button.
+// A new event is added to Calendar when the user taps the "Done" button in the above view controller.
+- (IBAction)addEvent:(id)sender {
+    // Create an instance of EKEventEditViewController
+	EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
+	
+	// Set addController's event store to the current event store
+	addController.eventStore = self.eventStore;
+    addController.editViewDelegate = self;
+    [self presentViewController:addController animated:YES completion:nil];
+}
+
+// Overriding EKEventEditViewDelegate method to update event store according to user actions.
+- (void)eventEditViewController:(EKEventEditViewController *)controller
+		  didCompleteWithAction:(EKEventEditViewAction)action
+{
+    CalendarViewController * __weak weakSelf = self;
+	// Dismiss the modal view controller
+    
+    [self dismissViewControllerAnimated:YES completion:^
+     {
+         if (action != EKEventEditViewActionCanceled)
+         {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 // Update the UI with the above events
+                 [weakSelf.tableView reloadData];
+             });
+         } else {
+             [weakSelf.tableView reloadData];
+         }
+     }];
+}
+
+// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
+- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller
+{
+	return self.defaultCalendar;
+}
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -30,9 +30,9 @@
 CGFloat const kDefaultDayLabelFontSize = 25.0f;
 CGFloat const kDefaultDayNameLabelFontSize = 11.0f;
 
-CGFloat const kDefaultCellHeight = 64.0f;
-CGFloat const kDefaultCellWidth = 64.0f;
-CGFloat const kDefaultCellFooterHeight = 6.0f;
+CGFloat const kDefaultCellHeight = 80.0f;
+CGFloat const kDefaultCellWidth = 50.0f;
+CGFloat const kDefaultCellFooterHeight = 5.0f;
 
 CGFloat const kDefaultDayLabelMaxZoomValue = 0.0f;
 
@@ -51,7 +51,9 @@ NSInteger const kDefaultFinalInactiveDays = 8;
 #define kDefaultShadowCellRadius 5
 
 #define kDefaultColorDay [UIColor blackColor]
-#define kDefaultColorDayName [UIColor colorWithRed:0.55f green:0.04f blue:0.04f alpha:1.00f]
+
+#define kDefaultColorDayName [UIColor lightGrayColor]
+
 #define kDefaultColorBottomBorder [UIColor colorWithRed:0.22f green:0.57f blue:0.80f alpha:1.00f]
 
 
