@@ -27,5 +27,7 @@
 
 - (NSDate *)dateAtBeginningOfDayForDay:(NSDate *)date;
 - (NSDate *)dateByAddingYears:(NSInteger)numberOfYears toDate:(NSDate *)inputDate;
+- (void)resetDayPicker;
+- (void)retreatEventsFrom:(EKEventStore *)eventStore from:(NSDate *)day to:(NSInteger) interval;
 
 @end

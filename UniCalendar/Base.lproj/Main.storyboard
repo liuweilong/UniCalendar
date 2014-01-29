@@ -16,53 +16,11 @@
                     </tabBar>
                     <connections>
                         <segue destination="z43-jf-ajD" kind="relationship" relationship="viewControllers" id="6bP-nI-iyN"/>
-                        <segue destination="XG3-JF-Q52" kind="relationship" relationship="viewControllers" id="CaU-oi-ydq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Olo-ug-hJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-293" y="467"/>
-        </scene>
-        <!--View Controller - Events-->
-        <scene sceneID="hp8-aA-3df">
-            <objects>
-                <viewController id="XG3-JF-Q52" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qjz-bS-rYm"/>
-                        <viewControllerLayoutGuide type="bottom" id="8P9-tQ-kbQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="daG-GU-G3F" customClass="Button">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ty3-G8-gfe">
-                                <rect key="frame" x="137" y="140" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeLabel:" destination="XG3-JF-Q52" eventType="touchUpInside" id="wl6-r8-Zez"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk8-0D-g0K">
-                                <rect key="frame" x="139" y="265" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Events" image="alert" id="HXw-7z-tJ6"/>
-                    <connections>
-                        <outlet property="label" destination="dk8-0D-g0K" id="SrF-qs-szk"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vfp-du-De1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="242" y="680"/>
         </scene>
         <!--Navigation Controller - Calendar-->
         <scene sceneID="kbh-QA-Lm5">
@@ -159,7 +117,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="alert" width="60" height="60"/>
         <image name="calendar" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
