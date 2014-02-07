@@ -89,7 +89,8 @@
     
     self.dayPicker.delegate = self;
     self.dayPicker.dataSource = self;
-    
+#pragma mark changed the color
+    //self.dayPicker.bottomBorderColor = redColor;
     self.dayPicker.bottomBorderColor = redColor;
     self.dayPicker.dayNameLabelFontSize = 13.0f;
     self.dayPicker.dayLabelFontSize = 20.0f;
@@ -223,6 +224,23 @@
 - (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller
 {
 	return self.defaultCalendar;
+}
+
+#pragma mark retrieve data from my test webserver
+- (void) retrieveData {
+    NSURL *url = [NSURL URLWithString:@"http://www.newcenturymanong.com/test/cities.php"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    
+    NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    NSLog(@"The size of json is %lu", (unsigned long)[json count]);
+    
+    //set up cities array
+    //NSMutableArray *cities = [[NSMutableArray alloc] init];
+    for (int i = 0; i < json.count; i++) {
+        NSDictionary *row = [json objectAtIndex:i];
+        NSLog(@"id: %@, name:%@, state:%@, population:%@, country:%@", [row objectForKey:@"id"], [row objectForKey:@"cityName"], [row objectForKey:@"cityState"], [row objectForKey:@"cityPopulation"], [row objectForKey:@"country"]);
+    }
 }
 
 
