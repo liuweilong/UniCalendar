@@ -89,8 +89,8 @@
     
     self.dayPicker.delegate = self;
     self.dayPicker.dataSource = self;
-#pragma mark changed the color
-    //self.dayPicker.bottomBorderColor = redColor;
+    
+#pragma mark changed the color/-----------------------
     self.dayPicker.bottomBorderColor = redColor;
     self.dayPicker.dayNameLabelFontSize = 13.0f;
     self.dayPicker.dayLabelFontSize = 20.0f;
@@ -108,9 +108,10 @@
     
     _titleDateFormatter = [[NSDateFormatter alloc] init];
     [_titleDateFormatter setDateFormat:@"MMMM yyyy"];
+//-----------------------------------------------------
     
     self.title = [_titleDateFormatter stringFromDate:today];
-   
+    
     //set the day picker to be today
     [self resetDayPicker];
     
@@ -187,24 +188,17 @@
     return cell;
 }
 
-// Display an event edit view controller when the user taps the "+" button.
-// A new event is added to Calendar when the user taps the "Done" button in the above view controller.
-- (IBAction)addEvent:(id)sender {
-    // Create an instance of EKEventEditViewController
-	EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
-	
-	// Set addController's event store to the current event store
-	addController.eventStore = self.eventStore;
-    addController.editViewDelegate = self;
-    [self presentViewController:addController animated:YES completion:nil];
+// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
+- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller
+{
+	return self.defaultCalendar;
 }
 
-// Overriding EKEventEditViewDelegate method to update event store according to user actions.
 - (void)eventEditViewController:(EKEventEditViewController *)controller
 		  didCompleteWithAction:(EKEventEditViewAction)action
 {
     CalendarViewController * __weak weakSelf = self;
-	// Dismiss the modal view controller
+    // Dismiss the modal view controller
     
     [self dismissViewControllerAnimated:YES completion:^
      {
@@ -218,29 +212,6 @@
              [weakSelf.tableView reloadData];
          }
      }];
-}
-
-// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
-- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller
-{
-	return self.defaultCalendar;
-}
-
-#pragma mark retrieve data from my test webserver
-- (void) retrieveData {
-    NSURL *url = [NSURL URLWithString:@"http://www.newcenturymanong.com/test/cities.php"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    
-    NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    
-    NSLog(@"The size of json is %lu", (unsigned long)[json count]);
-    
-    //set up cities array
-    //NSMutableArray *cities = [[NSMutableArray alloc] init];
-    for (int i = 0; i < json.count; i++) {
-        NSDictionary *row = [json objectAtIndex:i];
-        NSLog(@"id: %@, name:%@, state:%@, population:%@, country:%@", [row objectForKey:@"id"], [row objectForKey:@"cityName"], [row objectForKey:@"cityState"], [row objectForKey:@"cityPopulation"], [row objectForKey:@"country"]);
-    }
 }
 
 

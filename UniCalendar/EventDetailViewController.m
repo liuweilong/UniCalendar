@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.event = [[Event alloc] init];
     }
     return self;
 }
@@ -26,13 +26,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"View Loaded");
-	// Do any additional setup after loading the view
+    self.eventStore = [[EKEventStore alloc] init];
+    
     self.eventTitle.text = self.event.title;
     self.description.text = self.event.description;
 }
 
-- (IBAction)addEventToClendar:(id)sender {
+- (IBAction)addEventToCalendar:(id)sender {
+    EKEvent *newEvent = [EKEvent eventWithEventStore:self.eventStore];
+    
+    [newEvent setCalendar:[self.eventStore defaultCalendarForNewEvents]];
+    
+    newEvent.title = self.event.title;
+    newEvent.startDate = self.event.startDate;
+    newEvent.endDate = self.event.endDate;
+    newEvent.allDay = self.event.allDay;
+    newEvent.notes = self.event.description;
+    
+    NSError *err;
+    
+    [self.eventStore saveEvent:newEvent span:EKSpanThisEvent commit:YES error:&err];
+    if (err) {
+        NSLog(@"Failed, error:%@", err.localizedDescription);
+    } else {
+        NSLog(@"Successed");
+    }
 }
 
 - (void)didReceiveMemoryWarning

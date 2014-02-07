@@ -23,11 +23,11 @@
             </objects>
             <point key="canvasLocation" x="-601" y="501"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Events-->
         <scene sceneID="Qak-4h-3Nw">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Gke-9H-woF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="OsO-6B-8SD"/>
+                    <tabBarItem key="tabBarItem" title="Events" id="OsO-6B-8SD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hfO-KA-Q0r">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -72,7 +72,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="ZVi-iY-mFJ" kind="push" id="OWd-pp-QAd"/>
+                                    <segue destination="cPp-9r-wcd" kind="push" id="LWz-PW-xhz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -89,52 +89,49 @@
             <point key="canvasLocation" x="396" y="759"/>
         </scene>
         <!--Event Detail View Controller-->
-        <scene sceneID="rAu-4f-Ya7">
+        <scene sceneID="q6e-DR-fy0">
             <objects>
-                <viewController id="ZVi-iY-mFJ" customClass="EventDetailViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="cPp-9r-wcd" customClass="EventDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="7LF-Mt-Syp"/>
-                        <viewControllerLayoutGuide type="bottom" id="UQy-4p-qTG"/>
+                        <viewControllerLayoutGuide type="top" id="oab-n0-16Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="6e9-3d-uaf"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.0" contentMode="scaleToFill" id="t9i-rl-at8">
+                    <view key="view" contentMode="scaleToFill" id="crY-NV-C79">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBh-c5-p5a">
-                                <rect key="frame" x="20" y="82" width="280" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ob9-LU-AOV">
-                                <rect key="frame" x="20" y="181" width="280" height="114"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUl-pb-1sJ">
+                                <rect key="frame" x="20" y="83" width="159" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCA-in-PaA">
-                                <rect key="frame" x="107" y="346" width="106" height="30"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebk-d9-aEU">
+                                <rect key="frame" x="20" y="179" width="215" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="ADD To My List">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXF-yE-Dar">
+                                <rect key="frame" x="135" y="353" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="addEventToClendar:" destination="ZVi-iY-mFJ" eventType="touchUpInside" id="6Ng-Qh-aCq"/>
+                                    <action selector="addEventToCalendar:" destination="cPp-9r-wcd" eventType="touchUpInside" id="4P1-Gw-J3y"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="DSm-es-fWO"/>
+                    <navigationItem key="navigationItem" id="o3d-1s-mSo"/>
                     <connections>
-                        <outlet property="description" destination="Ob9-LU-AOV" id="9lO-RK-Q6b"/>
-                        <outlet property="eventTitle" destination="yBh-c5-p5a" id="gXL-T2-tJ1"/>
+                        <outlet property="description" destination="ebk-d9-aEU" id="QTo-7K-nfh"/>
+                        <outlet property="eventTitle" destination="HUl-pb-1sJ" id="76z-W0-OTZ"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cAb-nQ-wWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iQw-d1-fW1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="812" y="759"/>
+            <point key="canvasLocation" x="856" y="759"/>
         </scene>
         <!--Navigation Controller - Calendar-->
         <scene sceneID="kbh-QA-Lm5">
@@ -213,11 +210,7 @@
                     <tabBarItem key="tabBarItem" title="Cal" id="18s-4y-ghl"/>
                     <navigationItem key="navigationItem" id="K35-XP-Rga">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="BT9-Et-ak9">
-                            <connections>
-                                <action selector="addEvent:" destination="rkM-8K-6wt" id="gOR-oh-r9J"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="BT9-Et-ak9"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>

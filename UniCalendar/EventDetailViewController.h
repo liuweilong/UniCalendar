@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EventKit/EventKit.h>
 #import "Event.h"
 
 @interface EventDetailViewController : UIViewController
 
 @property (strong, nonatomic) Event *event;
-
-@property (strong, nonatomic) IBOutlet UILabel *description;
+@property (strong, nonatomic) EKEventStore *eventStore;
 @property (strong, nonatomic) IBOutlet UILabel *eventTitle;
+@property (strong, nonatomic) IBOutlet UILabel *description;
 
 @end

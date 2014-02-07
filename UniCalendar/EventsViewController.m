@@ -32,17 +32,14 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
     self.title = @"Events";
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+   
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm a"];
+    [self.dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     self.eventStore = [[EKEventStore alloc] init];
     self.eventArray = [[NSMutableArray alloc] init];
     
+    //Make the server request
     ServerRequester *req = [ServerRequester serverRequestWithURLString:dataRetrievalURL postVariables:nil timeOutInterval:10.f];
     [req setOnLoadedSelector:self selector:@selector(jsonLoaded:)];
     [req makeRequest];
@@ -57,6 +54,9 @@
         NSString *description = [eventDic objectForKey:@"discription"];
         NSDate *startDate = [self.dateFormatter dateFromString:[eventDic objectForKey:@"startDate"]];
         NSDate *endDate = [self.dateFormatter dateFromString:[eventDic objectForKey:@"endDate"]];
+        if (startDate == nil || endDate == nil) {
+            NSLog(@"Format error");
+        }
         BOOL allday = [[eventDic objectForKey:@"allday"] boolValue];
         
         NSLog(@"%@%@%@%@%@", [eventDic objectForKey:@"title"], [eventDic objectForKey:@"discription"], [eventDic objectForKey:@"startDate"], [eventDic objectForKey:@"endDate"], [eventDic objectForKey:@"allday"]);
@@ -69,7 +69,6 @@
         event.allDay = allday;
         
         [self.eventArray addObject:event];
-        NSLog(@"%d", [self.eventArray count]);
     }
     
     [self.tableView reloadData];
@@ -110,6 +109,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     EventDetailViewController *dvc = [segue destinationViewController];
     NSIndexPath *path = [self.tableView indexPathForSelectedRow];
     Event *event = [self.eventArray objectAtIndex:path.row];
