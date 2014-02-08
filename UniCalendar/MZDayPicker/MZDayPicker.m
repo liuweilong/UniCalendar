@@ -203,7 +203,7 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
 
 - (void)setCurrentDate:(NSDate *)date
 {
-    [self setCurrentDate:date animated:NO];
+    [self setCurrentDate:date animated:YES];
 }
 
 
@@ -590,7 +590,8 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
     [cell setBottomBorderColor:self.bottomBorderColor];
     
     cell.dayLabel.text = [NSString stringWithFormat:@"%@",day.day];
-    cell.dayNameLabel.text = [NSString stringWithFormat:@"%@",day.name];
+    //cell.dayLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:24.0];
+    cell.dayNameLabel.text = [NSString stringWithFormat:@"%@",[day.name uppercaseString]];
     
     if ([self.dataSource respondsToSelector:@selector(dayPicker:titleForCellDayLabelInDay:)]) {
         cell.dayLabel.text = [self.dataSource dayPicker:self titleForCellDayLabelInDay:day];

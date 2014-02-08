@@ -27,7 +27,7 @@
         <scene sceneID="Qak-4h-3Nw">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Gke-9H-woF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Events" id="OsO-6B-8SD"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="alert" id="OsO-6B-8SD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hfO-KA-Q0r">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -166,7 +166,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="82" translatesAutoresizingMaskIntoConstraints="NO" id="YqT-FD-eUn" customClass="MZDayPicker">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -174,7 +174,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hkh-vA-Sxc">
-                                <rect key="frame" x="0.0" y="154" width="320" height="371"/>
+                                <rect key="frame" x="0.0" y="148" width="320" height="420"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -224,6 +224,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="alert" width="60" height="60"/>
         <image name="calendar" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

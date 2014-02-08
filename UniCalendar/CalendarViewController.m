@@ -100,7 +100,7 @@
     [_dateFormatter setDateFormat:@"EE"];
     
     _sectionDateFormatter = [[NSDateFormatter alloc] init];
-    [_sectionDateFormatter setDateFormat:@"EEEE, dd MMMM yyyy"];
+    [_sectionDateFormatter setDateFormat:@"EEEE, dd/MM/yyyy"];
     
     _cellDateFormatter = [[NSDateFormatter alloc] init];
     _cellDateFormatter.dateStyle = NSDateFormatterNoStyle;
@@ -115,10 +115,10 @@
     //set the day picker to be today
     [self resetDayPicker];
     
-    self.tableView.frame = CGRectMake(0, self.dayPicker.frame.origin.y + self.dayPicker.dayCellSize.height, self.tableView.frame.size.width, self.view.bounds.size.height-self.dayPicker.dayCellSize.height);
-    
     //get all events from current events store within startdate and enddate
     _eventStore = [[EKEventStore alloc] init];
+    self.dayPickerCurrentDate = today;
+    
     [self retreatEventsFrom:_eventStore from:today to:retreatEventTimeInterval];
     [self.tableView reloadData];
 }
@@ -139,7 +139,7 @@
     nowComponents.day = dateComps.day;
     
     NSDate *now = [currentCalendar dateFromComponents:nowComponents];
-    
+    self.dayPickerCurrentDate = now;
     [self retreatEventsFrom:_eventStore from:now to:retreatEventTimeInterval];
     [self.tableView reloadData];
     
@@ -166,7 +166,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDate *date = [_sortedDays objectAtIndex:section];
-    return [_sectionDateFormatter stringFromDate:date];
+    
+    if ([date isEqual:[self dateAtBeginningOfDayForDay:today]]) {
+        return [NSString stringWithFormat:@"TODAY | %@",[[_sectionDateFormatter stringFromDate:date] uppercaseString]];;
+    } else if([date isEqual:[[self dateAtBeginningOfDayForDay:today] dateByAddingTimeInterval:60*60*24]]) {
+        return [NSString stringWithFormat:@"TOMORROW | %@",[[_sectionDateFormatter stringFromDate:date] uppercaseString]];;
+    }
+    return [[_sectionDateFormatter stringFromDate:date] uppercaseString];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

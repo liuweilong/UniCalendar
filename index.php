@@ -1,57 +1,28 @@
-<?php
-class RedeemAPI {
-	private $connection;
-	private $hostname = 'localhost';
-	private $username = 'apprevol_cal';
-	private $password = 'LWL19930415q';
-	private $database = 'apprevol_calendar';
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
 
-	// function __construct() {
-	// 	$this->connection = mysqli_connect($this->hostname, $this->username, $this->password, $this->database);	
-	// 	if(mysqli_connect_errno()) {
-	// 		die("Database connection failed: " . 
-	// 			mysqli_connect_error() . 
-	// 			" (" . mysqli_connect_errno() . ")"
-	// 			);
-	// 	}
-	// }
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Form</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Liu Weilong">
+	<!-- Date: 2014-01-26 -->
+</head>
+<body>
+	<form action = "form_processing.php" method="post">
+		Title: <input type="text" name="title" value=""/><br/>
+		<br/>
+		Discription: <input type="text" name="discription" value=""/><br/>
+		<br/>
+		Start Date: <input type="text" name="startdate" value=""/><br/>
+		<br/>
+		End Date: <input type="text" name="enddate" value=""/><br/>
+		<br/>
+		AllDay: <input type="text" name="allday" value=""/><br/>
+		<br/>
+		<input type="submit" name="submit" value="Submit"/>
+	</form>
+</body>
+</html>
 
-	// function __destruct() {
-	// 	if ($this->connection != null) {
-	// 		$this->connection->close();
-	// 	}
-	// }
-
-	function redeem() {
-		$mysqli = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-		$query = 'SELECT id, code, unlock_code, uses_remaining FROM rw_promo_code';
-		$result = $mysqli->query($query) or die($mysqli->error);
-		$data = array();
-
-		while ( $row = $result->fetch_assoc() ){
-			$data[] = json_encode($row);
-		}
-		echo json_encode( $data );
-		// $result = mysqli_query($this->connection, $query);
-		// //Test if there is a query error
-		// if (!$result) {
-		// 	die("Database query failed.");
-		// }
-		// $json = array();
-		// while ($row = mysqli_fetch_assoc($result)) {
-		// 	$id = $row["id"];
-		// 	$code = $row["code"];
-		// 	$unlock_code = $row["unlock_code"];
-		// 	$uses_remaining = $row["uses_remaining"];
-		// 	$json[] = '{ id: '.$id.', code :'.$code.', unlock_code : '.$unlock_code.', uses_remaining : '.$uses_remaining.'}';
-		// }
-		// echo json_encode($json);
-		// mysqli_free_result($result);
-	}
-
-}
-
-$api = new RedeemAPI;
-$api->redeem();
-?>

@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSDateFormatter *sectionDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *titleDateFormatter;
+@property (strong,nonatomic) NSDate *dayPickerCurrentDate;
 
 - (NSDate *)dateAtBeginningOfDayForDay:(NSDate *)date;
 - (NSDate *)dateByAddingYears:(NSInteger)numberOfYears toDate:(NSDate *)inputDate;
